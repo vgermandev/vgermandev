@@ -97,7 +97,10 @@ Here is array of 3 integers and how to extract element number 3 using “at:”
 ````
 LKN>Array(1 2 3) at:3
 3
+````
+
 Adding arrays:
+````
 LKN>(Array(`e1`  `e2`  `e3`) + Array(`i1`  `i2`  `i3`)) at:2
 e2i2
 ````
