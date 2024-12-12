@@ -101,7 +101,6 @@ Adding arrays:
 LKN>(Array(`e1`  `e2`  `e3`) + Array(`i1`  `i2`  `i3`)) at:2
 e2i2
 ````
-notice array can be specified with pound character # and braces.
 
 Array can be expanded by adding element to it
 ````
