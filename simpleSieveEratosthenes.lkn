@@ -1,0 +1,51 @@
+~
+Wikipedia:
+  In mathematics, the sieve of Eratosthenes is an ancient algorithm
+  for finding all prime numbers up to any given limit.
+~
+
+` ### Simple Sieve of Eratosthenes test printing primes in 0 to 20 range` println.
+
+~Allocate the test array~
+testArray := Array new.
+
+~
+Allocate an array of zeros and ones where the index of an element with the value of 1 indicates the prime number.
+~
+n:=20.
+a:= Array new:n.
+
+~Set all elements of the variable "a" to be 1.~
+a atAllPut:1.
+
+~Set 1 is not to be a prime number.~
+a at:1 put:0.
+
+~for each i starting from 2 till i < n/2~
+i:=2.
+[i <= (n/2)] whileTrue:[ ~repeat folowing~
+  j:= 2.
+  ij:= i*j.
+  [ij <= n] whileTrue:[
+    a at:ij put:0.
+    j:=j+1.
+	ij:=i*j.
+  ].
+  i:=i+1.
+].
+
+~Print primes and load them into the testArray.~
+i:=1.
+[i<=n] whileTrue:[
+  ((a at:i) == 1) ifTrue:[i println. testArray add:i].
+  i:=i+1.
+].
+
+~Check correctness.~
+(testArray == Array(2 3 5 7 11 13 17 19)) ifFalse:[
+	~The array does not match test one. Report and exit.~
+	`simple Sieve of Eratosthenes failed` println.
+	exit	
+].
+
+`Success Simple Sieve of Eratosthenes` println.
