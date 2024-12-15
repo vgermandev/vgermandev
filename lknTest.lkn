@@ -1,2 +1,5 @@
 evaluateFile:`simpleSieveEratosthenes.lkn`.
 evaluateFile:`FibonacciTest.lkn`.
+evaluateFile:`llistTest.lkn`.
+evaluateFile:`queuelTest.lkn`.
+evaluateFile:`binarytreeTest.lkn`

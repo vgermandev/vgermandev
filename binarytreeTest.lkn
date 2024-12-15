@@ -1,0 +1,98 @@
+evaluateFile:`binarytree.lkn`.
+evaluateFile:`StringStream.lkn`.	
+
+strm:=StringStream new.
+strm setString:`A B C + D E * * F+*`.
+
+stack:= Stack new.
+x:= Nil.
+c:= strm getc.
+[c notNil] whileTrue:[
+	[c == $SP] whileTrue:[c:= strm getc].
+	x := BinaryTreeNode new.
+	x info:c.
+	((c == $+) || (c == $*)) ifTrue:[
+		x r:(stack pop).
+		x l:(stack pop).
+	].
+	stack push:x.
+	c:= strm getc.
+].
+(stack pickVal info == $*)ifFalse:[`#1 binary tree test failed: * expected` println.exit].
+(stack pickVal r l r r info == $E)ifFalse:[`#2 binary tree test failed: E expected` println. exit].
+(stack pickVal r l r l info == $D)ifFalse:[`#3 binary tree test failed: D expected` println. exit].
+(stack pickVal r l l r info == $C)ifFalse:[`#4 binary tree test failed: C expected` println. exit].
+(stack pickVal r l l l info == $B)ifFalse:[`#4 binary tree test failed: B expected` println. exit].
+
+stack pickVal traversePreOrder.
+
+
+trace:=`  `.
+tree:=BinaryTreeNode new.
+tree info:$P;
+	l:(
+		BinaryTreeNode new
+			info:$M;
+			l:(
+				BinaryTreeNode new
+					info:$S;
+					l:(
+						BinaryTreeNode new
+							info:$A
+					);
+					r:(
+						BinaryTreeNode new
+							info:$A
+					)
+			)
+	);
+	r:(
+		BinaryTreeNode new
+			info:$L;
+			r:(
+				BinaryTreeNode new
+					info:$E;
+					r:(
+					BinaryTreeNode new
+						info:$R;
+						l:(
+							BinaryTreeNode new
+								info:$T
+						);					
+						r:(
+							BinaryTreeNode new
+								info:$E;
+								l:(
+									BinaryTreeNode new
+										info:$E
+								)
+						)
+					)					
+					
+			)
+	).
+tree traverseLevelOrder.
+
+tree levelOrderVisit:[:i| trace:=trace,(i info)].
+
+(trace == `  PMLSEAARTEE`) ifFalse:[
+	    ` level order trace expected to be PMLSEAARTEE  binary tree test failed` println.
+		exit].
+
+trace:=`  `.
+
+tree preOrderVisit:[:i| trace:=trace,(i info)].
+(trace == `  PLEREETMSAA`) ifFalse:[
+	    ` preorder trace expected to be PLEREETMSAA  binary tree test failed` println.
+		exit].	
+`BinaryTree test passed` println.	
+
+
+
+
+
+
+
+
+
+	
