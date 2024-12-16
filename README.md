@@ -5,7 +5,9 @@ Please check the few notes below about it.
 ## LKN in one line
 
 
-LKN is a computer language. “LKN” stands for “Language of Knowledge” or “Love for Knowledge.” It can be used as a calculator, programming language, or inference/rule engine. The programming language part is inspired by Smalltalk. 
+LKN is a computer language. “LKN” stands for “Language of Knowledge” or “Love for Knowledge.”
+It can be used as a calculator, programming language, or inference/rule engine.
+The programming language part is inspired by Smalltalk-80. C++20 is used to implement LKN interpreter.
 
 Here is an example of arithmetic calculations:
 ````
