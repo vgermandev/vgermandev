@@ -414,7 +414,6 @@ ret:= Sorter new 	partitionArray:a l:1 r:2.
 ((a at:1) == 6.1) ifFalse:[
    `first element must be 6.1 test Failed` println. exit].
 
-`Stop` println. 
 a:=Array(6.1 7.1).
 ret:= Sorter new 	partitionArray:a l:1 r:2.
 ((a at:1) == 6.1) ifFalse:[
