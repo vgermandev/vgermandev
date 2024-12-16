@@ -1,4 +1,4 @@
-I am working on a new computer language with the name __LKN__.
+I am φίλος γνώσης working on a new computer language with the name __LKN__.
 
 Please check the few notes below about it.
 
