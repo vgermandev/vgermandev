@@ -1,4 +1,4 @@
-~this is implementation of queue in LKM~
+~this is a test of the implementation of queue in LKM~
 ~note LKN has Deque as first class object~
 
 evaluateFile:`queuel.lkn`.

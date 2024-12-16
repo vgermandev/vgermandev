@@ -11,4 +11,6 @@ reset
 evaluateFile:`PriorityQueue.lkn`.
 reset
 evaluateFile:`Sorter.lkn`.
+reset
+evaluateFile:`AVLTree.lkn`.
 
