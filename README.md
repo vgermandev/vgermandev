@@ -92,8 +92,8 @@ Last dot can be omitted.
 
 ### LKN collections.
 
-#### Arrays.
 
+#### Arrays.
 
 Here is an array of 3 integers and how to extract element number 3 using “at:”:
 ````
@@ -113,10 +113,7 @@ LKN>((Array(`e1` `e2` `e3`)+Array(`i1` `i2` `i3`)) add:`last element`)at:4
 last element
 ````
 
-
-
 #### Double Linked Lists
-
 
 ````
 LKN>Dlist(1 2 3) first
@@ -126,7 +123,6 @@ LKN>Dlist(1 2 3) last
 LKN>Dlist(1 2 3) before:3
 2
 ````
-
 
 #### Sets
 
@@ -140,9 +136,7 @@ LKN>Set(1 2) add:3 includes:22
 False
 ````
 
-
 #### Maps(collection of key value pairs):
-
 
 ````
 LKN>Map((`k1` 1.1) (`k2` 2.2) (`k3` 3.3)) at:`k2`
@@ -169,6 +163,15 @@ LKN>[:l :r | l+r] value:2 value:4
 LKN>[:l :r | l+r] value:`abc` value:`XYZ`
 abcXYZ
 ````
+parameter names can be used to evaluate block:
+
+````
+[:l :r | l+r] l:`abc` r:`XYZ`
+abcXYZ
+[:l :r | l+r] r:`XYZ` l:`abc`
+abcXYZ
+````
+Note that changing the parameter order is not affecting result
 
 Internal variables can be used in a block:
 ````
@@ -243,7 +246,8 @@ Here is the equivalent of “if then else”:
 LKN>(2>=3)ifTrue:[`it is True` println]ifFalse:[`it is false` println].
 it is false
 ````
-### LKN support loops:
+
+### LKN supports loops:
 ````
 LKN>sum:=0. i:=0. [i <= 5]whileTrue:[sum:=sum+i. i:= i+1]. sum println.
 15
@@ -255,7 +259,7 @@ LKN>sum:=0. i:=0. [i > 5]whileFalse:[sum:=sum+i. i:= i+1]. sum println.
 
 ### Collection can be iterated, and lambda/block can be applied to each element.
 ````
-LKN>prod:=1.Array(1 2 3)do:[:i| (i+1) println. prod:=prod*i. prod println].
+LKN>prod:=1.Array(1 2 3)do:[:i| (i+1) println].
 2
 3
 4
@@ -276,13 +280,32 @@ LKN>prod:=1.Array(1 2 3)do:[:i| (i+1) println. prod:=prod*i. prod println].
 LKN>Dlist(1 2 4 6 8 10) detect:[:e|e>7]
 8
 
+LKN>Dlist(1 2 4 6 8 10) select:[:e|e>7]
+DList(8 10)
+
 LKN>Dlist(`a` `b` `c` `d`) select:[:e|e == `c` || e == `a`]
 DList(a c)
 
 ````
 
+### Recursion with blocks
 
-### LKN Classes and Instances
+Here is a recursive implementation of Factorial:
+````
+LKN>factorial:=[:n|| (n < 2)ifTrue:[1] ifFalse:[n*factorial n:(n-1)]].
+Nil
+LKN>factorial n:1
+1
+LKN>factorial n:2
+2
+LKN>factorial n:3
+6
+LKN>factorial n:4
+24
+````
+
+
+## LKN Classes and Instances
 
 
 To declare symbol to be class:
