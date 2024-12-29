@@ -19,7 +19,7 @@ As a programming language, the LKN has following features:
 
 LKN classes have attributes, methods and rules. Class rules are part of multi-inheritance along with class attributes and class methods.
 
-Please check short introductory document [LKN in one line](lknInOneLine.md).
+Please check short introductory document [LKN in one line](doc/lknInOneLine.md).
 There is examples folder with some LKN code.
 Many examples there are port to lkn of algorithms discussed in Robert Sedgewick book:
 “Algorithms in C++”.
