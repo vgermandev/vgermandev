@@ -1,0 +1,35 @@
+evaluateFile:`llist.lkn`.
+
+l:= Llist new
+	pushVal:10.0.
+
+l pushVal:9.0.
+l removeVal:10. 
+l removeVal:9.0.
+l pushVal:9.0.
+l pushVal:8.0.
+l pushVal:7.0.
+l pushVal:7.0.
+l pushVal:7.0.
+l pushVal:7.0.
+l pushVal:5.0.
+
+
+(l size != 7) ifTrue:[ `#1 Llist test failed: size 7 expected text failed` println.  exit].
+
+l removeVal:7.0.
+l removeVal:9.0.
+l removeVal:8.0.
+l removeVal:10.0.
+(l size != 1) ifTrue:[ `#2 Llist test failed: size one expected ` println.  exit].
+(l root val != 5.0) ifTrue:[`#3 Llist test failed: root 5 expected ` println. exit].
+
+l replaceValue: 5.0 withValue:10.0. 
+(l root val != 10.0) ifTrue:[`#4 Llist test failed: root 10 e` println.exit].
+
+l pushVal:7.0.
+(l root next val != 10.0) ifTrue:[`#5 Llist test failed: root 10 expected` println.exit].
+(l root val != 7.0) ifTrue:[`#5 Llist test failed:root 10 expected test failed` println. exit].
+
+`Llist passed` println.
+

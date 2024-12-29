@@ -1,0 +1,167 @@
+Class new: PriorityQueue
+	has:a;
+	implements:top:[
+		^(a first)
+	];
+	implements:[:simpleInsertElement|
+
+		(a isNil)ifTrue:[a:(Array new)].
+
+		a add:simpleInsertElement.
+
+	];
+	implements:simpleRemove:[locals:j max n ret.
+		max:=1.
+		j:=2.
+		n := a size.
+		((a size) == 1)ifTrue:[^(a popLast)].
+		[j<=n]whileTrue:[
+			((a at:j) > (a at:max))ifTrue:[max:=j].
+			(max != n)ifTrue:[
+				a swap:max with:n.
+			].
+			^(a popLast).
+		].
+	];
+	implements:isEmpty:[^(a empty)];
+	implements:[:upheapAtIndex|locals:v parentIndex.
+		k:=upheapAtIndex.
+		v:= a at:k.
+		parentIndex:= k/2.
+		((a size)<2)ifTrue:[^Nil].
+		[(k>1) && ((a at: parentIndex) <= v)]whileTrue:[
+			a at:k put:(a at:parentIndex).
+			k:=parentIndex.
+			parentIndex:=k/2.
+		].
+		a at:k put:v.
+	];
+	implements:[:downheap|locals:j v to n.
+		k:=downheap.
+		v:=a at:k.
+		n:=(a size).
+		to:= n/2.
+		[k <= to] whileTrue:[
+		   j:=k+k.
+		   ((j<n) && ((a at:j) < (a at:(j+1))))ifTrue:[j:=j+1].
+		   ((a at:j) > v)ifTrue:[
+			  a at:k put:(a at:j).
+			  k:=j.
+		   ]ifFalse:[
+		      to:=k-1.
+		   ]
+		].
+		a at:k put:v.		
+	];
+	implements:[:insertElement|
+		(a isNil) ifTrue:[a:Array new].
+		a add:insertElement.
+		upheapAtIndex:(a size).
+	];
+	implements:remove:[
+		v:= a first.
+		a at:1 put:(a last).
+		downheap:1.
+		a removeLast.
+		^v
+	].
+				
+
+
+pq:=PriorityQueue new.
+
+pq simpleInsertElement:1.0.
+
+e:= pq simpleRemove.
+
+(pq isEmpty) ifFalse:[
+	`pq must be empty` println.
+	exit
+].
+(e == 1.0) ifFalse:[
+	`removed element muste be 1.0` println.
+	exit
+].
+
+
+pq simpleInsertElement:1.0.
+pq simpleInsertElement:2.0.
+e:= pq simpleRemove.
+(e == 2.0)ifFalse:[
+	`removed element muste be 2.0` println.
+	exit
+].
+
+
+pq simpleInsertElement:3.0.
+pq simpleInsertElement:2.0.
+e:= pq simpleRemove.
+(e == 3.0)ifFalse:[
+	`removed element muste be 3.0` println.
+	exit
+].
+
+hq:= PriorityQueue new. 
+hq insertElement:2.0.
+((hq top) == 2.0) ifFalse:[
+	`first element 2.0 expected` println.exit].
+	
+	
+hq insertElement:3.0.
+((hq top) == 3.0) ifFalse:[
+	`first element 3.0 expected` println.exit].
+
+hq insertElement:4.0.
+((hq top) == 4.0) ifFalse:[
+	`first element 4.0 expected` println.exit].
+
+hq insertElement:5.0.
+((hq top) == 5.0) ifFalse:[
+	`first element 5.0 expected` println.exit].
+
+	
+hq insertElement:1.0.
+
+((hq top) == 5.0) ifFalse:[
+	`first element 5.0 expected` println.exit].
+
+hq insertElement:4.0.
+((hq top) == 5.0) ifFalse:[
+	`first element 5.0 expected` println.exit].
+
+hq insertElement:5.0.	
+((hq top) == 5.0) ifFalse:[
+	`first element 5.0 expected` println.exit].	
+
+
+r:= hq remove.
+((hq top) == 5.0) ifFalse:[
+	`first element 5.0 expected` println.exit].
+	
+r:= hq remove.
+((hq top) == 4.0) ifFalse:[
+	`first element 4.0 expected` println.exit].
+	
+r:= hq remove.
+((hq top) == 4.0) ifFalse:[
+	`first element 4.0 expected` println.exit].	
+	
+r:= hq remove.
+((hq top) == 3.0) ifFalse:[
+	`first element 3.0 expected` println.exit].	
+	
+r:= hq remove.
+((hq top) == 2.0) ifFalse:[
+	`first element 3.0 expected` println.exit].	
+	
+r:= hq remove.
+((hq top) == 1.0) ifFalse:[
+	`first element 3.0 expected` println.exit].	
+
+r:= hq remove.	
+(hq isEmpty) ifFalse:[
+	`empty queue expected` println. exit.
+].		
+
+
+`PriorityQueue test passed` println.

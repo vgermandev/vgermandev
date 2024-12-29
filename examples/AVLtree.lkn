@@ -1,0 +1,266 @@
+Class new:AvlTreeNode
+	has:key;
+	has:l;
+	has:r;
+	has:h;
+	implements:[:moveFromNode|
+		key:(moveFromNode key).
+		h:(moveFromNode h).
+		l:(moveFromNode l).
+		moveFromNode l:(Nil).
+		moveFromNode r:(Nil).
+	].
+	
+Class new:AvlTree
+	has:root;
+	implements:[:maxHeightLeftNode:rightNode|locals:l r.
+		l:=0.
+		r:=0.
+		(maxHeightLeftNode notNil)ifTrue:[l:=maxHeightLeftNode h].
+		(rightNode notNil)ifTrue:[r:=rightNode h].
+		(r > l)ifTrue:[^r].
+		^l
+	];
+	implements:[:newNodeGivenKey|locals:n.
+		n:= AvlTreeNode new 
+			key:newNodeGivenKey;
+			h:1.
+		^n
+	];
+	implements:[:rightRotateNode|locals:x y t2.
+		y:=rightRotateNode.
+		x:=y l.
+		t2:=x r.
+		x r:y.
+		y l:t2.
+		y h:((maxHeightLeftNode:(y l)rightNode:(y r))+1).
+		x h:((maxHeightLeftNode:(x l)rightNode:(x r))+1).
+		^x
+	];
+	
+	implements:[:leftRotateNode|locals:x y t2.
+		x:=leftRotateNode.
+		y:=x r.
+		t2:=y l.
+		y l:x.
+		x r:t2.
+		x h:((maxHeightLeftNode:(x l)rightNode:(x r))+1).
+		y h:((maxHeightLeftNode:(y l)rightNode:(y r))+1).		
+		^y
+	];
+	
+	implements:[:heightOfNode|
+		(heightOfNode isNil)ifTrue:[^0].
+		^heightOfNode h		
+	];
+	implements:[:balanceOfNode|
+		(balanceOfNode isNil)ifTrue:[^0].
+		^(heightOfNode:(balanceOfNode l) -  heightOfNode:(balanceOfNode r) )
+	];
+	
+	implements:[:insertNode:key|locals:balance.
+		(insertNode isNil)ifTrue:[^(newNodeGivenKey:key)].
+		(key == (insertNode key))ifTrue:[^insertNode].
+		(key< (insertNode key))	
+			ifTrue:[insertNode l:(insertNode:(insertNode l)key:key)]
+			ifFalse:[insertNode r:(insertNode:(insertNode r)key:key)].
+		insertNode h:(maxHeightLeftNode:(insertNode l)rightNode:(insertNode r)+1).	
+		balance:= balanceOfNode:insertNode.
+
+		((balance>1)&&( key < (insertNode l key)))ifTrue:[^rightRotateNode:insertNode].
+		((balance < -1)&&( key > (insertNode r key)))ifTrue:[^(leftRotateNode:insertNode)].
+		((balance>1)&&( key > (insertNode l key)))ifTrue:[
+			insertNode l:(leftRotateNode:(insertNode l)).
+			^rightRotateNode:insertNode
+		].
+		
+		((balance<-1)&&( key < (insertNode r key)))ifTrue:[
+			insertNode r:(rightRotateNode:(insertNode r)).
+			^leftRotateNode:insertNode
+		].
+		^insertNode
+	];
+	implements:[:insert|
+		(root isNil)ifTrue:[root:(insertNode:Nil key:insert).^self].
+		root:=insertNode:root key:insert.
+		^self
+	];
+	implements:[:printTreeNode|
+		(printTreeNode isNil)ifTrue:[^Nil].
+		printTreeNode:(printTreeNode l).
+		printTreeNode key println.
+		printTreeNode:(printTreeNode r).
+	];
+	implements:[:toArray:a|
+		(toArray isNil)ifTrue:[^Nil].
+		toArray:(toArray l)a:a.
+		a add:(toArray key).
+		toArray:(toArray r)a:a.
+	];
+
+	implements:[:minValueNode|locals:current.
+		current:= minValueNode.
+		[current l notNil]whileTrue:[current:= current l].
+		^current
+	];
+
+	implements:[:deleteNode:key|locals:rt temp temp1 balance.
+		rt:=deleteNode.
+		(rt isNil)ifTrue:[^Nil].
+		(key < (rt key))
+			ifTrue:[ rt l: (deleteNode:(rt l)key:key)]
+			ifFalse:[ (key > (rt key))
+					
+					ifTrue:[
+						rt r:(deleteNode:(rt r)key:key)]
+					ifFalse:[
+						((rt l isNil) || (rt r isNil))ifTrue:[
+							(rt l notNil)
+								ifTrue:[temp:= (rt l)]
+								ifFalse:[rt:= (rt r)].
+							(temp isNil)
+								ifTrue:[temp:=rt.rt:=Nil]
+								ifFalse:[rt moveFromNode:temp].
+						]ifFalse:[
+							temp:= minValueNode:(rt r).
+							rt key:(temp key).
+							temp1:=deleteNode:(rt r)key:(temp key).
+							rt r:(temp1).
+						]
+					]
+			].
+		(rt isNil)ifTrue:[^rt].
+		rt h:(1+maxHeightLeftNode:(rt l)rightNode:(rt r)).
+		balance:=balanceOfNode:rt.
+		((balance > 1)&& (balanceOfNode:(rt l) >= 0))ifTrue:[^rightRotateNode:rt].
+		((balance > 1)&& (balanceOfNode:(rt l) < 0))ifTrue:[
+			rt l:(leftRotateNode:(r l).
+			^rightRotate:rt
+		].
+		((balance < -1) && (balanceOfNode:(rt t) <= 0))ifTrue:[^leftRotateNode:rt].
+		((balance < -1)&& (balanceOfNode:(rt r) > 0))ifTrue:[
+			rt r:(rightRotateNode(rt r)).
+			^leftRotate:rt
+		].
+		^rt.		
+	];
+	implements:[:delete|
+		root:=deleteNode:root key:delete.
+		^self.
+	].
+	
+
+~TESTS~
+
+
+
+check:= [
+((t root key) == 4)ifFalse:[(tset + `##1 AVL tree test failed`) println.exit].
+((t root l key) == 2)ifFalse:[(tset + `##2 AVL tree test failed`) println.exit].
+((t root r key) == 6)ifFalse:[(tset + `##3 AVL tree test failed`) println.exit].
+((t root l l key) == 1)ifFalse:[(tset + `##3 AVL tree test failed`) println.exit].
+((t root l r key) == 3)ifFalse:[(tset + `##4 AVL tree test failed`) println.exit].
+((t root r l key) == 5)ifFalse:[(tset + `##5 AVL tree test failed`) println.exit].
+((t root r r key) == 7)ifFalse:[(tset + `##5 AVL tree test failed`) println.exit].
+].
+
+tset:=`#1`.
+	
+t:= AvlTree new
+	insert:1;
+	insert:2;
+	insert:3;
+	insert:4;
+	insert:5;
+	insert:6;
+	insert:7.
+	
+check value.
+
+tset:=`#2`.
+
+t:= AvlTree new
+	insert:7;
+	insert:6;
+	insert:5;
+	insert:4;
+	insert:3;
+	insert:2;
+	insert:1.
+check value.
+
+tset:=`#3`.
+
+t:= AvlTree new
+	insert:7;
+	insert:6;
+	insert:5;
+	insert:4;
+	insert:3;
+	insert:2;
+	insert:1.
+
+t delete:7.
+t delete:6.
+t delete:5.
+a:=Array new.
+t toArray:(t root)a:a.	
+(a == Array(1 2 3 4 ))ifFalse:[`#4 AVL tree test failed` println.exit].
+
+t:=AvlTree new root:(
+	AvlTreeNode new
+	key:4;
+	h:3;
+	l:(AvlTreeNode new
+		key:2;
+		h:2;
+		l:(AvlTreeNode new
+			key:1;
+			h:1
+		);
+		r:(AvlTreeNode new
+			key:3;
+			h:1
+		)
+	);
+	r:(AvlTreeNode new
+		key:5;
+		h:1
+	)
+).
+
+
+t delete:5.
+a:=Array new.
+t toArray:(t root)a:a.
+(a == Array(1 2 3 4 ))ifFalse:[`#5 AVL tree  test failed` println.exit].
+
+t delete:2.
+
+
+a:=Array new.
+t toArray:(t root)a:a.
+(a == Array(1 3 4 ))ifFalse:[`#6 AVL tree  test failed` println.exit].
+
+t:=AvlTree new root:(
+	AvlTreeNode new
+		key:2;
+		h:3;
+		l:(AvlTreeNode new
+			key:1;
+			h:1);
+
+		
+		r:(AvlTreeNode new
+			key:4;
+			h:2;
+			l:(AvlTreeNode new key:3;h:1)
+		)
+	
+).
+t delete:2.
+a:=Array new.
+t toArray:(t root)a:a.
+(a == Array(1 3 4 ))ifFalse:[`#7 AVL tree test failed Array4` println.exit].
+
+`AVL tree test passed` println.

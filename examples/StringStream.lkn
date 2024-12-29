@@ -1,0 +1,15 @@
+Class new:StringStream
+	has:string;
+	has:pos;
+	has:size;
+	implements:[:setString |
+		string:setString.
+		size:(setString size).
+		pos:1.
+	];
+	implements:getc:[
+		(pos <= size) ifTrue:[ret:=string at:pos. pos:=pos+1.^ret].
+		^Nil
+	].
+
+	

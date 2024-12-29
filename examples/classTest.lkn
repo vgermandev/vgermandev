@@ -1,0 +1,301 @@
+~#LKN Classes and their Instances~
+
+Root is a Class.
+Root class
+	has:	rootClassField;
+	implements: hello:[`Hello from Root Class` ];
+	implements: [:hello|^`Root class Hi `,hello ];
+	implements: [:hello:sayWord|^(`Root class Hi `,hello,` here is a word `,sayWord)].
+
+Root instance 
+			has: uniField;
+			has:rootField;
+			implements: hello:[^`Hello from Root Instance` ].
+
+Root class has:id.
+Root class has:maxId.
+Root instance has:id.
+
+~## Instance tests----~
+rt:= Root new rootField:1.2.
+
+~###instance fields~
+rt rootField:1.1.
+(rt rootField == 1.1)ifFalse:[`#1 class test failed: Root test failed` println.exit].
+
+~###instance methods~
+(rt hello == `Hello from Root Instance`)ifFalse:[`#2 class test failed: Root test failed` println.exit].
+((rt hello:`Nik`) == `Root class Hi Nik`)ifFalse:[`#3 class test failed: Root test failed` println.exit].
+
+
+~##class tests----~
+
+~###class fields~
+	
+Root rootClassField:`rootClassField value`.
+(Root rootClassField == `rootClassField value`) ifFalse:[`#4 class test failed` println.exit].
+
+~### class fields from instance~
+(rt rootClassField == `rootClassField value`) ifFalse:[`#5 class test failed` println.exit].
+
+~### class methods from class no param~
+(Root hello == `Hello from Root Class`) ifFalse:[`#6 class test failed` println.exit].
+
+
+~### class methods no param from instance as alternative to instance method with the same name~
+((rt class:Root hello) == `Hello from Root Instance`) ifFalse:[`#7 class test failed` println.exit].
+
+~### class methods from class 1 param~
+((Root class hello:`Nik`) == `Root class Hi Nik`)ifFalse:[`#8 class test failed` println.exit].
+
+~### class methods from instance 1 param~
+((rt class hello:`Nik`) == `Root class Hi Nik`)ifFalse:[`#9 class test failed` println.exit].
+
+
+~## Inheritance~
+
+
+~*************DIAMOND PROBLEM***********~
+
+~*** Two roots (LParent, RParent) with both having same field name (lrParentField) ****~
+
+LParent is a Class.
+
+LParent
+	isA:Root;
+	has: uniField;
+	has: lrParentField;
+	implements:[hello||^`Hello form LParent Instance`].
+	
+RParent is a Class.
+RParent
+	isA:Root;
+	has: uniField;
+	has:lrParentField;
+	implements:[hello||^`Hello form RParent Instance`].
+	
+Child is a Class.
+Child
+		isA:LParent;
+		isA:RParent;
+		has:uniField;
+		has:childField;
+		implements:[hello||^`Hello form RParent Instance`].
+
+ch:= Child new.
+
+ch class:LParent lrParentField: 1.1.
+
+ch class:RParent lrParentField:100.1.
+(ch class:LParent lrParentField == 1.10) ifFalse:[`#10 class test failed` println.exit].
+(ch class:RParent lrParentField == 100.10) ifFalse:[`#11 class test failed` println.exit].
+
+ch class:LParent lrParentField: 2.2.
+(ch class:LParent lrParentField == 2.20) ifFalse:[`#10 class test failed` println.exit].
+(ch class:RParent lrParentField == 100.10) ifFalse:[`#11 class test failed` println.exit].
+
+ch lrParentField: 3.3.
+(ch lrParentField == 3.3) ifFalse:[`#12 class test failed` println.exit].
+
+
+dch:= Child new.
+dch rootField:999.1.
+(dch rootField == 999.1) ifFalse:[`#13 class test failed` println.exit].
+
+~###specify class for field~
+dch class:LParent lrParentField: 7.1.
+dch class:RParent lrParentField: 5.1.
+
+(dch class:LParent lrParentField == 7.1) ifFalse:[`#14 class test failed` println.exit].
+(dch class:RParent lrParentField == 5.1) ifFalse:[`#15 class test failed` println.exit].
+
+dch class id:1000.
+dch class maxId:1001.
+dch id:1001.
+(dch class id == 1000) ifFalse:[`#16 class test failed` println.exit]. 
+
+(dch id == 1001) ifFalse:[`#17 class test failed` println.exit].
+
+dch class:Child uniField:0.0009.
+(dch class:Child uniField == 0.0009) ifFalse:[`#18 class test failed` println.exit].
+
+
+dch uniField:9.9.
+(dch uniField == 9.9) ifFalse:[`#19 class test failed` println.exit].
+dch class:LParent uniField:19.1.
+(dch class:LParent uniField == 19.1) ifFalse:[`#20 class test failed` println.exit].
+dch class:RParent uniField:19.2.
+(dch class:RParent uniField == 19.2) ifFalse:[`#21 class test failed` println.exit].
+dch class:Root uniField:29.0.
+(dch class:Root uniField == 29.0) ifFalse:[`#20 class test failed` println.exit].
+dch class:Child uniField:0.9.
+(dch class:Child uniField == 0.9) ifFalse:[`Class id test failed #26` println.exit].
+
+~********************** Methods *************~
+
+~***************** OLD TESTS ************************~
+
+KeyedData is a Class.
+
+~Instance~
+KeyedData instance
+	has:key;
+	instance has:data;
+	implements: text:[ ^`This is KeyedData Text`];
+	implements: toString:[^(`KeyData instance description:.........`)	];
+	implements:[:incDataBy| data:(data+incDataBy).self];
+	implements:[:incDataBy:decDataBy| data:(data+incDataBy - decDataBy).self].
+
+~class ~
+KeyedData class	
+	has:description;
+	has:v;
+	implements:toString:[^(`class KeyData description:.........`)];
+	implements:[:sqr| ^sqr*sqr].
+
+AltKeyedData is a Class.
+AltKeyedData instance
+	has:key;
+	has:data;
+	has:altField;
+	implements: toString:[^(`AltKeyedData instance description:.........`)].
+	
+AltKeyedData class
+	implements:toString:[^(`class AltKeyedData KeyData description:.........`)].
+	
+~============Simple Instance tests============~
+
+~fields~
+kd:= KeyedData new key:`key1`; data:10.1.
+(kd key == `key1`) ifFalse:[`class test failed #1` println.exit].
+(kd data == 10.1) ifFalse:[`class test failed #2` println.exit].
+
+~methods~
+(kd text == `This is KeyedData Text`)ifFalse:[`class test failed #3` println.exit].
+
+kd incDataBy:5. (kd data == 15.1)ifFalse:[`class test failed #4` println.exit].
+(kd incDataBy:100) incDataBy:200. (kd data == 315.1)ifFalse:[`class test failed #5` println.exit].
+
+~=============Simple Class  tests================~
+
+~fields~
+
+KeyedData description:`This is Description of KeyedData`.
+(KeyedData description == `This is Description of KeyedData`) ifFalse:[`Class test failed #6` println.exit.].
+KeyedData v:2.1.
+(KeyedData v == 2.1) ifFalse:[`Class test failed #7` println.exit.].
+~--- instance can see class fields---~
+~read~  
+(kd description == `This is Description of KeyedData`) ifFalse:[`Class test failed #8` println.exit.].
+~write~
+kd description:`Overwritten Description of KeyedData`.
+(kd description == `Overwritten Description of KeyedData`) ifFalse:[`Class test failed #8` println.exit.].
+
+~methods~
+(KeyedData toString == `class KeyData description:.........`) ifFalse:[`Class test failed #9` println.exit.].
+
+
+(KeyedData sqr:(3*2) == 36) ifFalse:[`Class test failed #10` println.exit.].
+((KeyedData sqr:3*2) == 18) ifFalse:[`Class test failed #11` println.exit.].
+
+~--- instance can see class methods---~ 
+
+(kd sqr:(3*2) == 36) ifFalse:[`Class test failed #12` println.exit.].
+((kd sqr:3*2) == 18) ifFalse:[`Class test failed #13` println.exit.].
+
+~--- instance does not call class when it has its own~
+(kd toString == `KeyData instance description:.........`) ifFalse:[`Class test failed #14` println.exit.].
+
+~Single inheritance Instance Tests~
+
+TaggedKeyedData is a Class.
+TaggedKeyedData isA:KeyedData.
+
+TaggedKeyedData class
+	has:classTag.
+
+TaggedKeyedData instance
+	has:tag;
+	implements:[tagSize|| ^(tag size)];
+	implements:[:extengTagWithChar || tag addLast:extengTagWithChar].
+	
+tgkd:=TaggedKeyedData new.
+
+
+tgkd key:`tgKey`;data:10.1; tag:`Tag`.
+
+(tgkd key == `tgKey`)ifFalse:[`Class test failed #15` println.exit].
+(tgkd tag == `Tag`)ifFalse:[`Class test failed #16` println.exit].
+
+tgkd incDataBy:5.
+
+(tgkd data == 15.1)ifFalse:[`class test failed #17` println.exit].
+
+(tgkd text == `This is KeyedData Text`)ifFalse:[`class test failed #18` println.exit].
+
+~--- instance can see derived class fields---~
+(TaggedKeyedData  description == `Overwritten Description of KeyedData`) ifFalse:[`Class test failed #20` println.exit.].  
+(tgkd description == `Overwritten Description of KeyedData`) ifFalse:[`Class test failed #21` println.exit.].
+
+~--- instance can see derived class methods---~   
+(tgkd sqr:(3*2) == 36) ifFalse:[`Class test failed #22` println.exit.].
+((tgkd sqr:3*2) == 18) ifFalse:[`Class test failed #23` println.exit.].
+
+TaggedKeyedData classTag:`ClassTag1`.
+(TaggedKeyedData classTag == `ClassTag1`)ifFalse:[`Class test failed #24` println.exit.].
+
+~Multi inheritance Instance Tests~
+
+TimedKeyedData is a Class.
+TimedKeyedData	class has:currency.
+
+TimedKeyedData instance
+	isA:KeyedData;
+	isA:AltKeyedData;
+	has:country.
+	
+~check 	branch	isA:KeyedData~
+
+tkd:= TimedKeyedData new
+	key:`key1`; data:10.1;country:`USA`.
+TimedKeyedData currency:`USD`.
+	
+~fields~
+(tkd key == `key1`) ifFalse:[`class test failed #25` println.exit].
+(tkd data == 10.1) ifFalse:[`class test failed #26` println.exit].
+
+~methods~
+(tkd text == `This is KeyedData Text`)ifFalse:[`class test failed #27` println.exit].
+tkd incDataBy:5. (tkd data == 15.1)ifFalse:[`class test failed #28` println.exit].
+(tkd incDataBy:100) incDataBy:200. (tkd data == 315.1)ifFalse:[`class test failed #29` println.exit].
+
+~--- instance can see class methods---~   
+(tkd sqr:(3*2) == 36) ifFalse:[`Class test failed #30` println.exit.].
+((tkd sqr:3*2) == 18) ifFalse:[`Class test failed #31` println.exit.].
+
+~check branch isA:AltKeyedData~
+
+~instance fields~
+((tkd country) == `USA`)ifFalse:[`Class test failed #32` println.exit].
+tkd country:`UK`.
+((tkd country) == `UK`)ifFalse:[`Class test failed #33` println.exit].
+
+~Multi inheritance Class Test~	
+
+~instance class field~
+((tkd currency) == `USD`)ifFalse:[`Class test failed #34` println.exit].
+
+tkd currency:`AUD`.
+((tkd currency) == `AUD`)ifFalse:[`Class test failed #34` println.exit].
+
+~instance diamond problem~
+
+tkd class:AltKeyedData key:`altKey`.
+
+(tkd class:AltKeyedData key ==`altKey`) ifFalse:[`Class test failed #35` println.exit].
+
+(tkd class:AltKeyedData key ==`altKey`) ifFalse:[`Class test failed #36` println.exit].
+
+`Class tests passed` println.
+
+

@@ -1,0 +1,6 @@
+evaluateFile:`llist.lkn`.
+
+Class new:Stack
+	isA:Llist;
+	implements:[:push| pushVal:push];
+	implements:pop:[^popVal].

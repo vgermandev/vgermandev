@@ -1,0 +1,75 @@
+evaluateFile:`Stack.lkn`.
+evaluateFile:`queuel.lkn`.
+Class new:BinaryTreeNode
+	has: info;
+	has:l;
+	has:r;
+	has:visited;
+	implements:visit:[
+		visited:True
+	];
+	implements:traversePreOrder:[
+		stack:= Stack new.
+		stack push:self.
+		[stack isEmpty] whileFalse:[
+			node:= stack pop.
+			node visit.
+			(node l notNil) ifTrue:[
+				stack push: (node l).
+			].
+			(node r notNil) ifTrue:[
+				stack push: (node r)
+			].
+		].
+	];
+	implements:[:preOrderVisit|
+		stack:= Stack new.
+		stack push:self.
+		[stack isEmpty] whileFalse:[
+			node:= stack pop.
+			preOrderVisit value:node.
+			(node l notNil) ifTrue:[
+				stack push: (node l).
+			].
+			(node r notNil) ifTrue:[
+				stack push: (node r)
+			].
+		].
+	];
+	implements:traverseLevelOrder:[
+		queue:=Queue new.
+		queue pushVal:self.
+		[queue isEmpty] whileFalse:[
+			node:=queue popVal. node visit.
+			(node l notNil) ifTrue:[
+				queue pushVal:(node l)].
+			(node r notNil) ifTrue:[
+				queue pushVal:(node r)]]];
+				
+	implements:[:levelOrderVisit|
+		queue:=Queue new.
+		queue pushVal:self.
+		[queue isEmpty] whileFalse:[
+			node:=queue popVal. levelOrderVisit value:node.
+			(node l notNil) ifTrue:[
+				queue pushVal:(node l)].
+			(node r notNil) ifTrue:[
+				queue pushVal:(node r)]]];
+	
+	implements:taverseReqursive:[
+		(l notNil) ifTrue:[
+			l taverseReqursive
+		].
+		visit.
+		(r notNil) ifTrue:[
+		  r taverseReqursive
+		].
+	].
+
+
+
+
+
+
+
+	

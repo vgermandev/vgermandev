@@ -1,0 +1,22 @@
+~this is an implementation of queue in LKM~
+~note LKN has Deque as first class object~
+
+evaluateFile:`llist.lkn`.
+
+Class new:Queue 
+    isA: Llist;
+	has:last;
+	implements:[:pushVal |
+		n:= LlistNode new val:pushVal.
+	    (root isNil) ifTrue:[root:n]
+					ifFalse:[last next:n.].
+		last:=n.
+	];
+	implements:popVal:[
+	    (root isNil) ifTrue:[^Nil].
+		ret:= root val.
+		(ret notNil) ifTrue:[
+			root:(root next).
+			(root isNil) ifTrue:[last:=Nil] ifFalse:[
+			(root next isNil) ifTrue:[last:=root]]].
+		^ret].

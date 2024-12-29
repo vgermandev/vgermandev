@@ -1,0 +1,75 @@
+~This is a posible Implementation of the Linked List in LKN~
+~Note: the LKN has Dlist - double linked list as first class object~
+
+~Linked list Node~
+Class new:LlistNode
+  has:val;
+  has:next.
+
+~Linked list iteself~  
+Class new:Llist
+  has:root;
+  implements: [:pushVal |locals: n.
+    n:= LlistNode new
+		val:pushVal.
+	(root isNil) ifTrue:[
+		root:n.
+	]ifFalse:[
+	  n next: root.
+	  root:n.
+	]
+  ].
+  
+Llist implements:[:removeVal |
+  [(root notNil) && ((root val) == removeVal)] whileTrue:[
+	root:= root next.
+  ].
+  prev:=root.  
+  [ (prev notNil) && ((prev next) notNil)] whileTrue:[
+	[(prev next notNil) && (prev next val == removeVal)] whileTrue:[
+	    prev next: (prev next next).
+	].
+	prev := prev next.
+  ]
+].
+
+Llist implements:size:[
+  len:=0.
+  node:=root.
+  [node notNil] whileTrue:[
+    len:=len+1.
+    node:= node next.
+  ].
+  ^len.
+].
+
+Llist implements:[:replaceValue:withValue |
+  node:=root.
+  [node notNil] whileTrue:[
+    (node val == replaceValue) ifTrue:[
+		node val:withValue.
+	].
+    node:= node next.
+  ].
+].
+
+Llist implements:pickVal:[
+    (root isNil) ifTrue:[^Nil].
+	^root val.
+].
+
+Llist implements:popVal:[
+    (root isNil) ifTrue:[^Nil].
+	ret:= root val.
+	(ret notNil) ifTrue:[
+		root:(root next).
+		^ret
+	].
+	^Nil
+].
+
+Llist implements:isEmpty:[
+	root isNil
+].
+	
+

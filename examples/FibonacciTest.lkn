@@ -1,0 +1,85 @@
+Class new: Fibonacci	
+	implements:[:fibonacci|
+		locals:from to num nextNum target.
+		(fibonacci < 2) ifTrue:[^1].
+		from:=0.
+		to:=fibonacci-1.
+		num:=1.
+		nextNum:=1.
+		[from < to] whileTrue:[
+			target:=num+nextNum.
+			num:=nextNum.
+			nextNum:=target.
+			from:=from+1.
+		].
+		^target
+	];
+	implements:[:fibonacciR|
+		(fibonacciR < 2) ifTrue:[^1].
+		^(fibonacciR:(fibonacciR-2)+fibonacciR:(fibonacciR-1))	
+	];
+	implements:[:fibonacciA|
+		asize:=fibonacciA+1.
+		a:= Array new:asize.
+		a at:1 put:1.
+		(fibonacciA > 0) ifTrue:[
+			a at:2 put:1.
+		].
+		(fibonacciA > 1) ifTrue:[
+			int:=Interval new from:2 to:asize step:1.
+			int do:[:i|
+				prev2:=a at:(i-1).
+				prev1:= a at:i.
+				a at:(i+1) put:(prev2+prev1).
+			].
+		].
+		^a.
+	].
+	
+	
+~ T E S T S ~	
+
+fib:= Fibonacci new.	
+
+~ Fibonachi loop test ~
+(fib fibonacci:1 == 1 )ifFalse:[
+	`#1 Fibonacci  test failed 1 expected` println.exit].	
+(fib fibonacci:2 == 2 )ifFalse:[
+	`#2 Fibonacci  test failed 2 expected` println.exit].
+(fib fibonacci:3 == 3 )ifFalse:[
+	`# 3 Fibonacci  test failed 3 expected` println.exit].
+(fib  fibonacci:4 == 5 )ifFalse:[
+	`#4 Fibonacci  test failed 5 expected` println.exit].
+(fib  fibonacci:5 == 8)ifFalse:[
+	`#5 Fibonacci  test failed 8 expected` println.exit].	
+`Fibonachi loop test passed` println.
+
+~ Fibonacci reqursive test ~
+(fib fibonacciR:0 == 1 )ifFalse:[
+	`#6 Fibonacci  recursive test failed 1 expected` println.exit].	
+(fib fibonacciR:1 == 1 )ifFalse:[
+	`#7 Fibonacci  recursive test failed 1 expected` println.exit].	
+(fib fibonacciR:2 == 2 )ifFalse:[
+	`#8 Fibonacci  recursive test failed 2 expected` println.exit].	
+(fib fibonacciR:3 == 3 )ifFalse:[
+	`#9 Fibonacci  recursive test failed 3 expected` println.exit].
+(fib fibonacciR:4 == 5 )ifFalse:[
+	`#10 Fibonacci  recursive test failed 5 expected` println.exit].	
+(fib fibonacciR:5 == 8 )ifFalse:[
+	`#11 Fibonacci  recursive test failed 8 expected` println.exit].
+`Fibonacci reqursive test passed` println.
+
+~ Fibonacci array test ~	
+((fib fibonacciA:0) at:1 == 1 )ifFalse:[
+	`#12 Fibonacci  Array test  failed 1 expected with arg 0` println.exit].
+((fib fibonacciA:1) at:2 == 1 )ifFalse:[
+	`#13 Fibonacci  Array test  failed 1 expected with arg 1` println.exit].
+((fib fibonacciA:2) at:3 == 2 )ifFalse:[
+	`#14 Fibonacci  Array test  failed 2 expected with arg 2` println.exit].
+((fib fibonacciA:3) at:4 == 3 )ifFalse:[
+	`#15 Fibonacci  Array test  failed 3 expected with arg 3` println.exit].	
+((fib fibonacciA:4) at:5 == 5 )ifFalse:[
+	`#16 Fibonacci  Array test  failed 5 expected with arg 4` println.exit].
+`Fibonacci array test passed` println.		
+	
+`All Fibonacci tests passed` println.

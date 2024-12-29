@@ -1,0 +1,37 @@
+Person is a Class.
+Person instance has: name; has:height; has: weight.
+Person implements:[getBmi|| weight/(height*height)].
+Person has: bmi per [:height :weight| bmi:(weight/(height*height))].
+Person has: weight_category being one of (Obese Overweight NormalWeight UnderWeight)
+		determined by 
+		[:bmi |
+			(bmi > 30) ifTrue:[	weight_category:Obese]ifFalse:
+			[
+				(bmi >=25) ifTrue:[weight_category:Overweight]ifFalse:
+				[
+					(bmi >=18.5 ) ifTrue:[weight_category:NormalWeight]ifFalse:
+					[
+						weight_category:UnderWeight
+					]
+				]
+			]
+		].
+	
+mia refers to a new Person with name:`Mia`;weight:55.0; height:1.7.
+(`Mia's bmi: ` + (mia getBmi) asString) println.
+(`Mia's bmi from rule: ` + (mia bmi) asString) println.
+mia weight:85.
+(`Mia's bmi after gainin 30kg : ` + (mia bmi) asString) println.
+mia weight_category println.
+(`Mia's weight category: ` + mia weight_category) println.
+
+Student is a Person.
+Student has: school.
+
+nik refers to a new Student with name:`Nik`;weight:70.0; height:1.8.
+(`Nik's bmi: ` + (nik getBmi) asString) println.
+(`Niks's bmi from ruleg: ` + (nik bmi) asString) println.
+nik weight:105.
+(`Nik's bmi after gainin 35kg : ` + (nik bmi) asString) println.
+nik weight_category println.
+(`Nik's weight category: ` + nik weight_category) println.

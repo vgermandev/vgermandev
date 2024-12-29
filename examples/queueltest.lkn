@@ -1,0 +1,37 @@
+~this is a test of the implementation of queue in LKM~
+~note LKN has Deque as first class object~
+
+evaluateFile:`queuel.lkn`.
+
+q:= Queue new.
+q pushVal:1.0.
+(q popVal != 1.0) ifTrue:[`#1 Queue test failed: first queue elemant must be 1.0` println.exit].
+q pushVal:2.0.
+(q pickVal != 2.0) ifTrue:[`#2 Queue test failed: first queue element must be 2.0` println].
+
+v:= q popVal.
+(v != 2.0) ifTrue:[`#3 Queue test failed: poped value must be 2.0` println].
+  
+(q isEmpty) ifFalse:[`#4 Queue test failed: queue should be empty. Test Failed` println.exit.].
+q pushVal:10.0.
+q pushVal:20.0.
+q pushVal:30.0.
+
+(q pickVal != 10.0) ifTrue:[`#5 Queue test failed: top queue must be 10. Test failed`.	exit].
+
+(q popVal != 10.0) ifTrue:[`#6 Queue test failed: top queue must be 10. Test failed`.	exit].
+
+(q pickVal != 20.0) ifTrue:[`#7 Queue test failed: top queue must be 20. Test failed`.	exit].
+
+(q popVal != 20.0) ifTrue:[`#8 Queue test failed: last popped value top queue must be 20.0 Test failed`.exit].
+	
+(q popVal != 30.0) ifTrue:[`#9 Queue test failed: last popped value top queue must be 30.0 Test failed`.exit].
+ 
+(q popVal notNil) ifTrue:[`#10 Queue test failed: top queue must be Nil. Test failed` println.exit].
+ 
+(q pickVal notNil) ifTrue:[`#10 Queue test failed: top queue must be Nil. Test failedthis time` println. exit].
+ 
+`Linked list based Queue test passed` println.
+
+
+	
