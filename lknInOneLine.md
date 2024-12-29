@@ -333,7 +333,7 @@ To test it we need to start LKN fresh and enter/copy-paste the following sequenc
 ````
 Person is a Class.
 Person instance has: name; has:height; has: weight.
-Person implements:[getBmi|| weight/(height*height)].
+Person implements:getBmi:[ weight/(height*height)].
 Person has: bmi per [:height :weight| bmi:(weight/(height*height))].
 mia refers to new Person with name:`Mia`;weight:55.0; height:1.7.
 (`Mia's bmi: ` + (mia getBmi) asString) println.
@@ -349,7 +349,7 @@ LKN>Person is a Class.
 Definition of Class Person
 LKN>Person instance has: name; has:height; has: weight.
 Instance definition of Class Person
-LKN>Person implements:[getBmi|| weight/(height*height)].
+LKN>Person implements:getBmi:[ weight/(height*height)].
 Class Person
 LKN>Person has: bmi per [:height :weight| bmi:(weight/(height*height))].
 Class Person
@@ -374,7 +374,7 @@ If one stores the below text in a file with the name Person.lkn:
 ````
 Person is a Class.
 Person instance has: name; has:height; has: weight.
-Person implements:[getBmi|| weight/(height*height)].
+Person implements:getBmi:[ weight/(height*height)].
 Person has: bmi per [:height :weight| bmi:(weight/(height*height))].
 
 
