@@ -1,56 +1,56 @@
 # LKN
-LKN is new computer language.
+LKN a is new computer language.
 LKN stands for “Language of Knowledge” or “Love for Knowledge”
-LKN is a hybrid of programming language and rule engine.
-The LKN interpreter implemented in c++20.
-Syntax inspired by Smalltalk-80.
-As a programming language, the LKN has following features:
+LKN is a hybrid of a programming language and a rule engine.
+The LKN interpreter is implemented in C++20.
+The LKN syntax is inspired by Smalltalk-80.
+As a programming language, the LKN has the following features:
 * integer and real numbers.
 * strings
-* Collections: Arrays, Double Linked Lists, Maps, Queues.
+* collections: Arrays, Double Linked Lists, Maps, Queues.
 * comparison statements
 * logical statements 
 * blocks of code named and unnamed
 * conditional statements
 * loops
 * classes
-*rules
+* rules
 * multi-inheritance
 
-LKN classes have attributes, methods and rules. Class rules are part of multi-inheritance along with class attributes and class methods.
+LKN classes have attributes, methods, and rules. Class rules are part of multiple inheritance, along with class attributes and class methods.
 
 Please check short introductory document [LKN in one line](./doc/lkninoneline.md).
-There is examples folder with some LKN code.
-Many examples there are port to lkn of algorithms discussed in Robert Sedgewick book:
-“Algorithms in C++”.
-Examples covers following topics.
+There is an "examples" folder with some LKN code.
+Many examples of algorithms in this folder are discussed in Robert Sedgewick's book:
+“Algorithms in C++.” and ported to LKN.
+Examples cover the following topics.
 
 #### File:`simpleSieveEratosthenes.lkn`.
-File have Prime number generator written in Lkn.
+The file has the implementation of the prime number generator written in Lkn.
 
 #### File:`FibonacciTest.lkn`.
-Implements the class Fibonacci with 3 methods of generating fibonacci numbers
+The file has the implementation of the class Fibonacci with 3 methods of generating fibonacci numbers
 * fibonacci with loop implementation
 * fibonacciR with recursive implementation
 * fibonacciA with array implementation
 
 #### Files:`llist.lkn` and  `llistTest.lkn`
-implementation of linked list.
+The file has the implementation of the linked list class.
 
 #### File:`queuelTest.lkn`
-implementation of queue based on above implementation of linked list.
+The file has the implementation of the queue based on the above implementation of a linked list.
 
 #### File:`Stack.lkn`
-Stack implementation based on above linked list implementation.
+The file has the implementation of the stack based on above implementation of linked list .
 
 #### Files:`binarytree.lkn`, `binarytreeTest.lkn`.
-Binary tree implementation
+The file has the implementation of the binary tree.
 
 #### File:`PriorityQueue.lkn`.
-Priority queue implementation
+The file has the implementation of the Priority queue.
 
 #### File:`Sorter.lkn`.
-Implementation of sorting algorithms such as:
+The file has the implementation of the sorting algorithms such as:
 * selection sort
 * insertion sort
 * bubble sort
@@ -60,9 +60,9 @@ Implementation of sorting algorithms such as:
 * heap sort
 
 #### File:`AVLTree.lkn`
-implementation of selfbalancing AVL tree
+The file has the implementation of the sorting algorithms such as:selfbalancing AVL tree
 
 #### File:`classTest.lkn`
-implementation of Classes and instances multi-inheritance and it’s ”Diamond Problem”
+The file has the implementation of the classes and instances with multiple inheritance and its ”diamond problem."
 
 
