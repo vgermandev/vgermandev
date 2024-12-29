@@ -1,8 +1,5 @@
-I am working on a new computer language with the name __LKN__.
 
-Please check the few notes below about it.
-
-## LKN in one line
+# LKN in one line
 
 
 LKN is a computer language. “LKN” stands for “Language of Knowledge” or “Love for Knowledge.” It can be used as a calculator, programming language, or inference/rule engine. The programming language part is inspired by Smalltalk. 
