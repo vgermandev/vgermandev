@@ -66,3 +66,6 @@ The file has the implementation of the sorting algorithms such as:selfbalancing 
 The file has the implementation of the classes and instances with multiple inheritance and its ”diamond problem."
 
 
+_There will be more examples and docs uploaded._ 
+
+
